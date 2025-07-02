@@ -1,0 +1,31 @@
+export  const chartData = {
+  "24hours": [
+    { date: "00:00", assigned: 45, completed: 40 },
+    { date: "04:00", assigned: 30, completed: 28 },
+    { date: "08:00", assigned: 65, completed: 55 },
+    { date: "12:00", assigned: 80, completed: 70 },
+    { date: "16:00", assigned: 75, completed: 65 },
+    { date: "20:00", assigned: 50, completed: 45 },
+  ],
+  "7days": [
+    { date: "Mon", assigned: 180, completed: 160 },
+    { date: "Tue", assigned: 220, completed: 200 },
+    { date: "Wed", assigned: 160, completed: 140 },
+    { date: "Thu", assigned: 200, completed: 180 },
+    { date: "Fri", assigned: 240, completed: 210 },
+    { date: "Sat", assigned: 120, completed: 100 },
+    { date: "Sun", assigned: 100, completed: 90 },
+  ],
+  "30days": [
+    { date: "12 Mar", assigned: 250, completed: 175 },
+    { date: "13 Mar", assigned: 135, completed: 135 },
+    { date: "14 Mar", assigned: 160, completed: 120 },
+    { date: "15 Mar", assigned: 200, completed: 50 },
+    { date: "16 Mar", assigned: 220, completed: 25 },
+    { date: "17 Mar", assigned: 135, completed: 135 },
+    { date: "18 Mar", assigned: 25, completed: 25 },
+    { date: "19 Mar", assigned: 135, completed: 110 },
+    { date: "20 Mar", assigned: 250, completed: 225 },
+    { date: "21 Mar", assigned: 225, completed: 200 },
+  ],
+};
