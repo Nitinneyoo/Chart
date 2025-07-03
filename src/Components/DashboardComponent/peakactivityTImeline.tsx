@@ -7,9 +7,16 @@ import { InfoCard } from "./InfoCard"
 import { FilterSection } from "./FilterSection"
 import { mockPeakActivityData, mockPeakActivityInfo } from "../../data/mockData"
 import { useState } from "react"
+import { type DateRange } from "react-day-picker"
 
 export default function peakActivityTimeline() {
   const [selectedRobot, setSelectedRobot] = useState("all-robots");
+  const [dateRange, setDateRange] = useState<DateRange | undefined>();
+  
+  const handleDateRangeChange = (newDateRange: DateRange | undefined) => {
+    setDateRange(newDateRange);
+    console.log('Peak activity date range changed:', newDateRange);
+  };
   
   // Get data for the selected robot
   const chartData = mockPeakActivityData[selectedRobot as keyof typeof mockPeakActivityData];
@@ -50,6 +57,7 @@ export default function peakActivityTimeline() {
             defaultValue="all-robots"
             selectedRobot={selectedRobot}
             onRobotChange={setSelectedRobot}
+            onDateRangeChange={handleDateRangeChange}
           />
         </div>
 

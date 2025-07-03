@@ -19,7 +19,7 @@ export function MetricCard({ title, value, description, animationData }: MetricC
   };
 
   return (
-    <Card className="bg-white">
+    <Card className="bg-white p-2 gap-4 rounded-md">
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
         <CardTitle className="text-sm font-medium text-gray-600">{title}</CardTitle>
         <div className="ml-10">

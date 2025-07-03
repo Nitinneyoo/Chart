@@ -1,5 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card"
-import { DatePickerWithRange } from "@/components/ui/date-range-picker"
+import { DateRangeFilter } from "./DateRangeFilter"
+import { type DateRange } from "react-day-picker"
 import { mockTimelineData } from "../../data/mockData"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { useState } from "react"
@@ -10,33 +11,44 @@ interface TimelineChartProps {
 
 export function TimelineChart({ robotId }: TimelineChartProps = {}) {
   const [selectedRobot, setSelectedRobot] = useState("all-robots");
+  const [dateRange, setDateRange] = useState<DateRange | undefined>();
   
+  const handleDateRangeChange = (newDateRange: DateRange | undefined) => {
+    setDateRange(newDateRange);
+    // Here you can filter data based on the selected date range
+    console.log('Date range changed:', newDateRange);
+  };
+
   // Use robotId prop if provided, otherwise use local state
   const activeRobot = robotId || selectedRobot;
-  
+
   // Map AR* robot IDs to our data format
   let mappedRobotId = activeRobot;
   if (activeRobot === "AR2002026") mappedRobotId = "robot-1";
   else if (activeRobot === "AR2002027") mappedRobotId = "robot-2";
   else if (activeRobot.startsWith("AR")) mappedRobotId = "all-robots";
-  
+
   // Get data for the selected robot
   const timelineData = mockTimelineData[mappedRobotId] || mockTimelineData["all-robots"];
   return (
-    <Card className="bg-white shadow-sm">
+    <Card className="bg-white shadow-sm p-0">
       <CardContent className="p-6">
         <div className="mb-6">
-          <h2 className="text-lg font-medium mb-1">Time Spend</h2>
-          <p className="text-sm text-gray-600 mb-4">What did the devices do during the day?</p>
-          <div className="flex items-center gap-4">
-            <div className="w-fit">
-              <DatePickerWithRange />
+          <div className="flex gap-6">
+            <div>
+              <h2 className="text-lg font-medium mb-1">Time Spend</h2>
+              <p className="text-sm text-gray-600 mb-4">What did the devices do during the day?</p>
+            </div>
+            <div className="flex items-center gap-4">
+              <div className="w-fit">
+                <DateRangeFilter onDateRangeChange={handleDateRangeChange} />
+              </div>
             </div>
             {!robotId && (
               <div>
-                <Select 
-                  defaultValue="all-robots" 
-                  value={selectedRobot} 
+                <Select
+                  defaultValue="all-robots"
+                  value={selectedRobot}
                   onValueChange={setSelectedRobot}
                 >
                   <SelectTrigger className="w-[180px]">

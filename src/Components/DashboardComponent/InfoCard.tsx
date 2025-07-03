@@ -12,9 +12,9 @@ interface InfoCardProps {
 
 export function InfoCard({ title, value, icon: Icon, bgColor, iconBgColor, iconColor }: InfoCardProps) {
   return (
-    <Card className={`${bgColor} border-opacity-20 flex-1 max-w-[380px]`}>
-      <CardContent className="p-4">
-        <div className="flex items-center gap-6" >
+    <Card className={`${bgColor} border-opacity-20 flex-1 max-w-[380px] p-0 rounded-md` }>
+      <CardContent className="p-2">
+        <div className="flex items-center gap-6 p-0" >
           <div className={`p-2 ${iconBgColor} rounded-lg flex-shrink-0`}>
             <Icon className={`h-5 w-5 ${iconColor}`} />
           </div>

@@ -1,7 +1,8 @@
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { type ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent, Bar, BarChart, XAxis, YAxis } from "@/components/ui/chart"
-import { DatePickerWithRange } from "@/components/ui/date-range-picker"
+import { DateRangeFilter } from "../DashboardComponent/DateRangeFilter"
+import { type DateRange } from "react-day-picker"
 import { MetricCard } from "../DashboardComponent/MetricCard"
 import { chartData } from "../../data/chartData"
 import { useState } from "react"
@@ -28,6 +29,12 @@ const chartConfig = {
 
 const DashboardScreen = () => {
     const [selectedPeriod, setSelectedPeriod] = useState<TimePeriod>("30days");
+    const [dateRange, setDateRange] = useState<DateRange | undefined>();
+    
+    const handleDateRangeChange = (newDateRange: DateRange | undefined) => {
+        setDateRange(newDateRange);
+        console.log('Dashboard date range changed:', newDateRange);
+    };
     
     return (
         <div className="p-4 md:p-6 space-y-6 bg-gray-50">
@@ -105,7 +112,7 @@ const DashboardScreen = () => {
                                     Last 30 Days
                                 </Button>
                                 <div className="ml-4">
-                                    <DatePickerWithRange />
+                                    <DateRangeFilter onDateRangeChange={handleDateRangeChange} />
                                 </div>
                             </div>
                         </div>
