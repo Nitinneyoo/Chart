@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Bot, LayoutDashboard } from "lucide-react";
+import { AntennaIcon, Bot, LayoutDashboard } from "lucide-react";
 
 export function Navbar() {
 	return (
@@ -27,6 +27,18 @@ export function Navbar() {
 					>
 						<Bot />
 						<p className="font-light text-xs">Robot</p>
+					</Link>
+				</li>
+				<li className="flex items-center justify-center px-1">
+					<Link
+						to="/analytics"
+						className="flex w-full flex-col items-center gap-1 rounded-lg p-1 text-foreground"
+						activeProps={{
+							className: "bg-[#005EB8]",
+						}}
+					>
+						<AntennaIcon />
+						<p className="font-light text-xs">Analytics</p>
 					</Link>
 				</li>
 			</ul>

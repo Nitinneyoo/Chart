@@ -8,16 +8,16 @@ export const Route = createRootRoute({
 
 function RootComponent() {
 	return (
-		<div className="flex flex-col h-screen w-full">
-			{/* Fixed Header */}
-			<Header />
+		<div className="flex h-screen w-full">
+			{/* Fixed Sidebar - Full Height */}
+			<Navbar />
 
-			{/* Content Area with Sidebar */}
-			<div className="flex flex-1 overflow-hidden">
-				{/* Fixed Sidebar */}
-				<Navbar />
+			{/* Content Area */}
+			<div className="flex flex-col flex-1">
+				{/* Header */}
+				<Header />
 
-				{/* Scrollable Content Only */}
+				{/* Scrollable Content */}
 				<main className="flex-1 overflow-y-auto">
 					<Outlet />
 				</main>

@@ -12,8 +12,8 @@ export function DateRangeFilter({
 	className,
 }: DateRangeFilterProps) {
 	const [dateRange, setDateRange] = useState<DateRange | undefined>({
-		from: new Date(2024, 2, 11),
-		to: new Date(2024, 3, 9),
+		from: new Date(2025, 6, 5),
+		to: new Date(2025, 6, 15),
 	});
 
 	const handleDateChange = (newDateRange: DateRange | undefined) => {

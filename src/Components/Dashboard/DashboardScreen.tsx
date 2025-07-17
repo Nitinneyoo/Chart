@@ -14,14 +14,14 @@ import {
 } from "@/components/ui/chart";
 import { chartData } from "../../data/chartData";
 import { mockFulfillmentData } from "../../data/mockData";
-import { DateRangeFilter } from "../DashboardComponent/DateRangeFilter";
-import { MetricCard } from "../DashboardComponent/MetricCard";
-import PeakActivityTimeline from "../DashboardComponent/peakactivityTImeline";
-import RobotUtilizationSummary from "../DashboardComponent/RobotUtilizationSummary";
 import ActiveAnimation from "../Utility/Lotti/Active.json";
 import ErrorAnimation from "../Utility/Lotti/Error.json";
 import MaintenanceAnimation from "../Utility/Lotti/Maintanance.json";
 import SuccessfulAnimation from "../Utility/Lotti/Succesfull.json";
+import { DateRangeFilter } from "./DashboardComponent/DateRangeFilter";
+import { MetricCard } from "./DashboardComponent/MetricCard";
+import PeakActivityTimeline from "./DashboardComponent/peakactivityTImeline";
+import RobotUtilizationSummary from "./DashboardComponent/RobotUtilizationSummary";
 
 type TimePeriod = "24hours" | "7days" | "30days";
 

@@ -10,11 +10,17 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as RobotRouteRouteImport } from './routes/robot/route'
+import { Route as AnalyticsRouteRouteImport } from './routes/analytics/route'
 import { Route as IndexRouteImport } from './routes/index'
 
 const RobotRouteRoute = RobotRouteRouteImport.update({
   id: '/robot',
   path: '/robot',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AnalyticsRouteRoute = AnalyticsRouteRouteImport.update({
+  id: '/analytics',
+  path: '/analytics',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -25,27 +31,31 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/analytics': typeof AnalyticsRouteRoute
   '/robot': typeof RobotRouteRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/analytics': typeof AnalyticsRouteRoute
   '/robot': typeof RobotRouteRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/analytics': typeof AnalyticsRouteRoute
   '/robot': typeof RobotRouteRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/robot'
+  fullPaths: '/' | '/analytics' | '/robot'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/robot'
-  id: '__root__' | '/' | '/robot'
+  to: '/' | '/analytics' | '/robot'
+  id: '__root__' | '/' | '/analytics' | '/robot'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AnalyticsRouteRoute: typeof AnalyticsRouteRoute
   RobotRouteRoute: typeof RobotRouteRoute
 }
 
@@ -56,6 +66,13 @@ declare module '@tanstack/react-router' {
       path: '/robot'
       fullPath: '/robot'
       preLoaderRoute: typeof RobotRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/analytics': {
+      id: '/analytics'
+      path: '/analytics'
+      fullPath: '/analytics'
+      preLoaderRoute: typeof AnalyticsRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -70,6 +87,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AnalyticsRouteRoute: AnalyticsRouteRoute,
   RobotRouteRoute: RobotRouteRoute,
 }
 export const routeTree = rootRouteImport

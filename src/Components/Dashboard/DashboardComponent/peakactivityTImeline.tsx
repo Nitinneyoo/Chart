@@ -8,7 +8,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import {
 	mockPeakActivityData,
 	mockPeakActivityInfo,
-} from "../../data/mockData";
+} from "../../../data/mockData";
 import { FilterSection } from "./FilterSection";
 import { InfoCard } from "./InfoCard";
 

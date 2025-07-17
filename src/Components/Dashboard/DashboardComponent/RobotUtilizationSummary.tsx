@@ -8,7 +8,7 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import { mockUtilizationData } from "../../data/mockData";
+import { mockUtilizationData } from "../../../data/mockData";
 import { TimelineChart } from "./TimelineChart";
 import { UtilizationCard } from "./UtilizationCard";
 
