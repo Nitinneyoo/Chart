@@ -9,7 +9,7 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 import { mockUtilizationData } from "../../../data/mockData";
-import { TimelineChart } from "./TimelineChart";
+import { TimelineChart } from "./TimeLineGantChart";
 import { UtilizationCard } from "./UtilizationCard";
 
 export default function RobotUtilizationSummary() {
@@ -70,7 +70,7 @@ export default function RobotUtilizationSummary() {
 			</div>
 
 			{/* Time Spend Section */}
-			<TimelineChart robotId={selectedRobot} />
+			<TimelineChart />
 		</div>
 	);
 }

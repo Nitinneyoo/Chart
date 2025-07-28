@@ -49,7 +49,7 @@ export function DatePickerWithRange({
 						{selectedDate?.from ? (
 							selectedDate.to ? (
 								<>
-									{selectedDate.from.toLocaleDateString()} -{" "}
+									{selectedDate.from.toLocaleDateString()} -{" "}	
 									{selectedDate.to.toLocaleDateString()}
 								</>
 							) : (
@@ -61,7 +61,7 @@ export function DatePickerWithRange({
 					</Button>
 				</PopoverTrigger>
 				<PopoverContent
-					className="w-auto p-0"
+					className="w-auto p-0 mr-20"
 					align="start"
 					side="bottom"
 					sideOffset={4}
@@ -70,10 +70,12 @@ export function DatePickerWithRange({
 						initialFocus
 						mode="range"
 						defaultMonth={selectedDate?.from}
+						showOutsideDays={false}
 						selected={selectedDate}
 						onSelect={handleDateChange}
-						numberOfMonths={2}
+						numberOfMonths={1}
 						fixedWeeks
+
 					/>
 				</PopoverContent>
 			</Popover>

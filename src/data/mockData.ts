@@ -10,252 +10,65 @@ export interface TimelineBar {
 	};
 }
 
-export const mockTimelineData: Record<string, TimelineBar[]> = {
+export const mockTimelineDataNew = {
 	"all-robots": [
 		{
 			status: "error",
-			startTime: "13:00",
-			duration: 4,
-			color: "bg-red-300",
-			position: { top: "16px", left: "33%" },
+			timeline: [
+				{ startTime: "13:00", endTime: "14:00" },
+			],
 		},
 		{
 			status: "active",
-			startTime: "10:30",
-			duration: 18,
-			color: "bg-green-300",
-			position: { top: "56px", left: "8%" },
-		},
-		{
-			status: "active",
-			startTime: "12:00",
-			duration: 10,
-			color: "bg-green-300",
-			position: { top: "56px", left: "28%" },
-		},
-		{
-			status: "active",
-			startTime: "15:30",
-			duration: 10,
-			color: "bg-green-300",
-			position: { top: "56px", left: "48%" },
-		},
-		{
-			status: "active",
-			startTime: "17:00",
-			duration: 10,
-			color: "bg-green-300",
-			position: { top: "56px", left: "60%" },
-		},
-		{
-			status: "active",
-			startTime: "19:00",
-			duration: 6,
-			color: "bg-green-300",
-			position: { top: "56px", left: "72%" },
-		},
-		{
-			status: "active",
-			startTime: "20:30",
-			duration: 15,
-			color: "bg-green-300",
-			position: { top: "56px", left: "80%" },
+			timeline: [
+
+				{ startTime: "10:30", endTime: "11:45" },
+				{ startTime: "12:02", endTime: "13:00" },
+
+				{ startTime: "15:30", endTime: "16:45" },
+
+
+				{ startTime: "17:00", endTime: "18:26" },
+
+
+				{ startTime: "19:00", endTime: "19:51" },
+				{ startTime: "20:30", endTime: "23:06" },
+			],
 		},
 		{
 			status: "idle",
-			startTime: "11:45",
-			duration: 4,
-			color: "bg-blue-200",
-			position: { top: "96px", left: "26%" },
-		},
-		{
-			status: "idle",
-			startTime: "16:45",
-			duration: 3,
-			color: "bg-blue-200",
-			position: { top: "96px", left: "58%" },
-		},
-		{
-			status: "idle",
-			startTime: "18:45",
-			duration: 3,
-			color: "bg-blue-200",
-			position: { top: "96px", left: "70%" },
-		},
-		{
-			status: "idle",
-			startTime: "20:15",
-			duration: 2,
-			color: "bg-blue-200",
-			position: { top: "96px", left: "78%" },
+			timeline: [
+
+				{ startTime: "11:45", endTime: "12:02" },
+
+
+				{ startTime: "16:45", endTime: "17:00" },
+
+				{ startTime: "18:45", endTime: "19:00" },
+
+
+				{ startTime: "20:15", endTime: "20:28" },
+
+				// { startTime: "02:15", endTime: "04:30" }
+			],
 		},
 		{
 			status: "charging",
-			startTime: "14:00",
-			duration: 12,
-			color: "bg-orange-300",
-			position: { top: "136px", left: "38%" },
+			timeline: [
+
+				{ startTime: "14:00", endTime: "15:30" },
+			],
 		},
 		{
+
 			status: "connected",
-			startTime: "10:00",
-			duration: 95,
-			color: "bg-blue-400",
-			position: { top: "176px", left: "2%" },
-		},
-	],
-	"robot-1": [
-		{
-			status: "error",
-			startTime: "14:30",
-			duration: 6,
-			color: "bg-red-300",
-			position: { top: "16px", left: "45%" },
-		},
-		{
-			status: "active",
-			startTime: "10:00",
-			duration: 15,
-			color: "bg-green-300",
-			position: { top: "56px", left: "5%" },
-		},
-		{
-			status: "active",
-			startTime: "12:30",
-			duration: 8,
-			color: "bg-green-300",
-			position: { top: "56px", left: "30%" },
-		},
-		{
-			status: "active",
-			startTime: "16:00",
-			duration: 12,
-			color: "bg-green-300",
-			position: { top: "56px", left: "55%" },
-		},
-		{
-			status: "active",
-			startTime: "20:00",
-			duration: 10,
-			color: "bg-green-300",
-			position: { top: "56px", left: "75%" },
-		},
-		{
-			status: "idle",
-			startTime: "11:30",
-			duration: 5,
-			color: "bg-blue-200",
-			position: { top: "96px", left: "20%" },
-		},
-		{
-			status: "idle",
-			startTime: "15:00",
-			duration: 4,
-			color: "bg-blue-200",
-			position: { top: "96px", left: "50%" },
-		},
-		{
-			status: "idle",
-			startTime: "19:00",
-			duration: 3,
-			color: "bg-blue-200",
-			position: { top: "96px", left: "70%" },
-		},
-		{
-			status: "charging",
-			startTime: "13:00",
-			duration: 10,
-			color: "bg-orange-300",
-			position: { top: "136px", left: "35%" },
-		},
-		{
-			status: "connected",
-			startTime: "10:00",
-			duration: 90,
-			color: "bg-blue-400",
-			position: { top: "176px", left: "5%" },
-		},
-	],
-	"robot-2": [
-		{
-			status: "error",
-			startTime: "11:00",
-			duration: 3,
-			color: "bg-red-300",
-			position: { top: "16px", left: "15%" },
-		},
-		{
-			status: "error",
-			startTime: "18:30",
-			duration: 5,
-			color: "bg-red-300",
-			position: { top: "16px", left: "65%" },
-		},
-		{
-			status: "active",
-			startTime: "10:00",
-			duration: 8,
-			color: "bg-green-300",
-			position: { top: "56px", left: "5%" },
-		},
-		{
-			status: "active",
-			startTime: "13:00",
-			duration: 15,
-			color: "bg-green-300",
-			position: { top: "56px", left: "35%" },
-		},
-		{
-			status: "active",
-			startTime: "17:00",
-			duration: 7,
-			color: "bg-green-300",
-			position: { top: "56px", left: "60%" },
-		},
-		{
-			status: "active",
-			startTime: "21:00",
-			duration: 12,
-			color: "bg-green-300",
-			position: { top: "56px", left: "80%" },
-		},
-		{
-			status: "idle",
-			startTime: "12:00",
-			duration: 4,
-			color: "bg-blue-200",
-			position: { top: "96px", left: "25%" },
-		},
-		{
-			status: "idle",
-			startTime: "16:00",
-			duration: 3,
-			color: "bg-blue-200",
-			position: { top: "96px", left: "55%" },
-		},
-		{
-			status: "idle",
-			startTime: "20:00",
-			duration: 2,
-			color: "bg-blue-200",
-			position: { top: "96px", left: "75%" },
-		},
-		{
-			status: "charging",
-			startTime: "15:00",
-			duration: 8,
-			color: "bg-orange-300",
-			position: { top: "136px", left: "50%" },
-		},
-		{
-			status: "connected",
-			startTime: "10:00",
-			duration: 92,
-			color: "bg-blue-400",
-			position: { top: "176px", left: "4%" },
+			timeline: [
+				{ startTime: "10:00", endTime: "22:48" },
+			],
 		},
 	],
 };
+
 
 // Mock data for Peak Activity
 export const mockPeakActivityData = {

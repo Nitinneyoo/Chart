@@ -1,34 +1,17 @@
-"use client";
 
+import { ResponsiveContainer } from "recharts";
+import MetricsCards from "./MetricsCards";
+import ChartSection from "./ChartSection";
+import PeakActivityTimeline from "./PeakActivityTimeline";
 import {
-	Bar,
-	BarChart,
-	CartesianGrid,
-	Cell,
-	LabelList,
-	XAxis,
-	YAxis,
-} from "recharts";
-import { Card, CardContent } from "@/components/ui/card";
-import {
-	ChartContainer,
-	ChartLegend,
-	ChartLegendContent,
-	ChartTooltip,
-	ChartTooltipContent,
-} from "@/components/ui/chart";
-import ChartControls from "./ChartControls";
+	ChartData,
+	MetricsData,
+	SuccessRateData,
+	type TimePeriod,
+} from "../../data/mockAnalyticsData";
+import { useState } from "react";
 
-interface ChartSectionProps {
-	activeView: "volume" | "success";
-	requestsData?: any[];
-	successRateData?: any[];
-	onViewChange: (view: "volume" | "success") => void;
-	onPeriodChange: (period: string) => void;
-    yAxisDomain : any[] | undefined;
-}
-
-const requestsData = [
+const TimeLineData = [
     {
         "timestamp": "Jul 17th 1 AM",
         "total": 4,
@@ -492,119 +475,39 @@ const requestsData = [
         "l": "Jul 22nd 11 AM - 12 PM"
     }
 ]
-export default function ChartSection({
-	activeView = "volume",
-	// requestsData,
-	successRateData,
-	onViewChange,
-	onPeriodChange,
-    yAxisDomain,
-}: ChartSectionProps) {
+
+export default function RequestsOverview() {
+	const [activeView, setActiveView] = useState<"volume" | "success">("volume");
+	const [selectedPeriod, setSelectedPeriod] = useState<TimePeriod>("30days");
+
+	const metricsData = MetricsData["all"][selectedPeriod];
+	const requestsData = ChartData["all"][selectedPeriod];
+	const successRateData = SuccessRateData["all"][selectedPeriod];
+	const processedTimeline = TimeLineData.map((item) => ({
+		...item,
+		period: selectedPeriod,
+		orders: item.total < 0 ? 0 : item.total,
+	}));
+
 	return (
-		<Card className="py-0">
-			<CardContent>
-				<ChartControls
-					activeView={activeView}
-					onViewChange={onViewChange}
-					onPeriodChange={onPeriodChange}
-					successIcon="/insights.svg"
-				/>
-				<div className="h-80 mt-10">
-					{activeView === "volume" ? (
-						<ChartContainer
-							config={{
-								total: {
-									label: "Assigned Requests",
-									color: "[#005EB8]",
-								},
-								success: {
-									label: "Completed Requests",
-									color: "[#86EFAC]",
-								},
-							}}
-							className="h-full w-full"
-						>
-							<BarChart data={requestsData}>
-								<CartesianGrid strokeDasharray="3 3" />
-								<XAxis
-                                dataKey="timestamp"
-                                />
-								<YAxis
-                                label={{
-                                    value: "Number of Request",
-                                    angle: -90,
-                                    position: "center",
-                                    fontSize: 14,
-                                    fill: "#2563eb",
-                                }}
-                                domain={yAxisDomain}/>
-								<ChartTooltip
-									content={<ChartTooltipContent />}
-									cursor={true}
-									position={{ x: undefined, y: undefined }}
-									offset={10}
-								/>
-                                <ChartLegend content={ChartLegendContent}/>
-								<Bar
-									dataKey="total"
-									fill="#005EB8"
-									name="Assigned Requests"
-									barSize={20}
-								/>
-								<Bar
-									dataKey="success"
-									fill="#16A34A"
-									name="Completed Requests"
-									barSize={20}
-								/>
-							</BarChart>
-						</ChartContainer>
-					) : (
-						<ChartContainer
-							config={{
-								rate: {
-									label: "Success Rate %",
-									color: "[#16A34A]",
-								},
-							}}
-							className="h-full w-full"
-						>
-							<BarChart data={successRateData}>
-								<CartesianGrid strokeDasharray="3 3" />
-								<XAxis dataKey="date" />
-								<YAxis domain={[0, 100]} />
-								<ChartTooltip
-									content={<ChartTooltipContent />}
-									cursor={true}
-									position={{ x: undefined, y: undefined }}
-									offset={10}
-								/>
-                                <ChartLegend content={ChartLegendContent}/>
-								<Bar
-									dataKey="rate"
-									fill="#16A34A"
-									name="Success Rate %"
-									barSize={20}
-								>
-									{successRateData?.map((entry, index) => (
-										<Cell
-											key={`cell-${index}`}
-											fill={entry.rate <= 30 ? "#EF4444" : "#16A34A"}
-										/>
-									))}
-									<LabelList
-										dataKey="rate"
-										position="top"
-										formatter={(value) => `${value}%`}
-									/>
-								</Bar>
+		<div className="space-y-6">
+			<MetricsCards activeView={activeView} data={metricsData} />
 
-							</BarChart>
-						</ChartContainer>
-					)}
-				</div>
+			<ResponsiveContainer width="100%">
+				<ChartSection
+                    activeView={activeView}
+                    requestsData={requestsData}
+                    successRateData={successRateData}
+                    onViewChange={setActiveView}
+                    onPeriodChange={(period) => setSelectedPeriod(period as TimePeriod)} yAxisDomain={undefined}				/>
+			</ResponsiveContainer>
 
-			</CardContent>
-		</Card>
+			<div className="ml-2 text-[#005EB8] font-medium text-[20px]">
+				Peak Activity Timeline
+			</div>
+			<ResponsiveContainer width="100%">
+				<PeakActivityTimeline timelineData={processedTimeline} />
+			</ResponsiveContainer>
+		</div>
 	);
 }

@@ -1,115 +1,51 @@
-"use client";
-
 import { useState } from "react";
-
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import {
-	generateChartData,
-	generateMetricsData,
-	generateSuccessRateData,
-	generateTimelineData,
-	type RobotId,
-	type TimePeriod,
-} from "../../data/mockAnalyticsData";
-import RobotHeatMap from "./AnaliticsComponent/RobotHeatMap";
-import RobotUtilization from "./AnaliticsComponent/RobotUtilization";
-import ChartControls from "./ChartControls";
-import ChartSection from "./ChartSection";
-import MetricsCards from "./MetricsCards";
-import PeakActivityTimeline from "./PeakActivityTimeline";
-
-const timelineData = Array.from({ length: 100 }, (_, i) => ({
-	time: `${String(Math.floor(i / 4)).padStart(2, "0")}:${String((i % 4) * 15).padStart(2, "0")}`,
-	orders: Math.floor(Math.random() * 50) + 10,
-}));
+import RequestsOverview from "./RequestOverview";
+import RobotHeatMap from "./RobotHeatMap";
+import RobotUtilization from "./RobotUtilization";
 
 export default function FleetAnalytics() {
-	const [activeView, setActiveView] = useState<"volume" | "success">("volume");
-	const [activeTab, setActiveTab] = useState("overview");
-	const [selectedPeriod, setSelectedPeriod] = useState<TimePeriod>("30days");
-	const [timelineRobot, setTimelineRobot] = useState<RobotId>("all");
-
-	// Generate dynamic data - main charts use "all" robots, timeline uses separate selection
-	const metricsData = generateMetricsData("all", selectedPeriod);
-	const requestsData = generateChartData("all", selectedPeriod);
-	const successRateData = generateSuccessRateData("all", selectedPeriod);
-	const timelineData = generateTimelineData(timelineRobot, selectedPeriod);
+	const [activeLink, setActiveLink] = useState<"overview" | "heatmap" | "utilization">("overview");
 
 	return (
-		<div className="h-full flex flex-col bg-gray-50">
-			{/* Sticky Navigation Tabs */}
-			<div className="sticky top-0 z-10 bg-white border-b">
-				<div className="px-6 py-4">
-					<Tabs
-						value={activeTab}
-						onValueChange={setActiveTab}
-						className="w-full"
+		<div className="min-h-full flex flex-col bg-gray-50">
+			{/* Header */}
+			<header className="flex items-center justify-between bg-white shadow-sm border-b-2 w-full p-4">
+				<h1 className="text-[34px] font-bold text-gray-800">Fleet Analytics</h1>
+			</header>
+
+			{/* Links */}
+			<div className="px-6 py-4 bg-white/20 backdrop-blur-md border border-white/20 sticky top-0 z-10 shadow-sm">
+				<div className="grid grid-cols-3 bg-[#E0F2FE] rounded-lg lg:w-1/2">
+					<button
+						onClick={() => setActiveLink("overview")}
+						className={`px-4 py-2 text-center rounded-lg ${activeLink === "overview" ? "bg-[#005EB8] text-white" : "text-[#475569]"
+							}`}
 					>
-						<TabsList className="grid w-full grid-cols-3 lg:w-1/2 lg:grid-cols-3 bg-[#E0F2FE]">
-							<TabsTrigger
-								value="overview"
-								className="data-[state=active]:bg-blue-900 data-[state=active]:text-white"
-							>
-								<img
-									src="/insights.svg"
-									alt="Success"
-									className="w-4 h-4 mr-2"
-								/>
-								Requests Overview
-							</TabsTrigger>
-							<TabsTrigger
-								value="heatmap"
-								className="data-[state=active]:bg-blue-900 data-[state=active]:text-white"
-							>
-								Robot Heatmap
-							</TabsTrigger>
-							<TabsTrigger
-								value="utilization"
-								className="data-[state=active]:bg-blue-900 data-[state=active]:text-white"
-							>
-								Robot Utilization
-							</TabsTrigger>
-						</TabsList>
-					</Tabs>
+						Requests Overview
+					</button>
+					<button
+						onClick={() => setActiveLink("heatmap")}
+						className={`px-4 py-2 text-center rounded-lg ${activeLink === "heatmap" ? "bg-[#005EB8] text-white" : "text-[#475569]"
+							}`}
+					>
+						Robot Heatmap
+					</button>
+					<button
+						onClick={() => setActiveLink("utilization")}
+						className={`px-4 py-2 text-center rounded-lg ${activeLink === "utilization" ? "bg-[#005EB8] text-white" : "text-[#475569]"
+							}`}
+					>
+						Robot Utilization
+					</button>
 				</div>
 			</div>
 
-			{/* Scrollable Content */}
-			<div className="flex-1 overflow-auto">
-				<Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-					<TabsContent value="overview" className="p-6 space-y-6">
-						<MetricsCards activeView={activeView} data={metricsData} />
-
-						<ChartControls
-							activeView={activeView}
-							onViewChange={setActiveView}
-							onPeriodChange={(period) =>
-								setSelectedPeriod(period as TimePeriod)
-							}
-							successIcon="/insights.svg"
-						/>
-
-						<ChartSection
-							activeView={activeView}
-							requestsData={requestsData}
-							successRateData={successRateData}
-						/>
-
-						<PeakActivityTimeline
-							timelineData={timelineData}
-							onRobotChange={(robot) => setTimelineRobot(robot as RobotId)}
-						/>
-					</TabsContent>
-
-					<TabsContent value="heatmap" className="p-6">
-						<RobotHeatMap />
-					</TabsContent>
-
-					<TabsContent value="utilization" className="p-0">
-						<RobotUtilization />
-					</TabsContent>
-				</Tabs>
+			{/* Content Below Links */}
+			<div className="p-6 flex-1 w-full">
+				{activeLink === "overview" && <RequestsOverview />}
+				{activeLink === "heatmap" && <RobotHeatMap />}
+				{activeLink === "utilization" && <RobotUtilization />}
 			</div>
-		</div>
+		</div >
 	);
 }

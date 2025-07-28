@@ -1,4 +1,4 @@
-"use client";
+
 
 import { useState } from "react";
 import {
@@ -29,7 +29,7 @@ export default function RobotSelector({
 
 	return (
 		<Select value={selectedRobot} onValueChange={handleRobotChange}>
-			<SelectTrigger className={`w-32 ${className}`}>
+			<SelectTrigger className={`w-full ${className}`}>
 				<SelectValue placeholder={placeholder} />
 			</SelectTrigger>
 			<SelectContent>

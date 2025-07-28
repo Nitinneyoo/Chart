@@ -20,14 +20,14 @@ export function Header() {
 	const pageTitle = getPageTitle(location.pathname);
 
 	return (
-		<header className="flex items-center justify-between bg-[#ffffff] shadow-sm border-b-2 w-full p-4 overflow-y-auto">
-			<div className="flex items-center gap-3">
+		<header className="relative flex items-center justify-between bg-[#ffffff] shadow-sm border-b-2 w-full p-4 overflow-x-auto">
+			<div className="flex items-center gap-3 min-w-fit">
 				<h1 className="text-xl font-semibold text-gray-800">{pageTitle}</h1>
 			</div>
-			<div className="flex items-end">
+			<div className="flex items-center gap-4 ml-auto">
 				<DateRangeFilter onDateRangeChange={() => {}} />
+				<ExportButton />
 			</div>
-			<ExportButton />
 		</header>
 	);
 }

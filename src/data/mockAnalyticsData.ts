@@ -1,30 +1,30 @@
 export type TimePeriod = "24hours" | "7days" | "30days" | "custom";
 export type RobotId = "all" | "ARTOO2025" | "ARTOO2026" | "ARTOO2027";
 
-export interface MetricsData {
+export interface GenerateMetricsData {
 	successRate: number;
 	assignedRequests: number;
 	completedRequests: number;
 	failedRequests: number;
 }
 
-export interface ChartData {
+export interface GenerateChartData {
 	date: string;
 	assigned: number;
 	completed: number;
 }
 
-export interface SuccessRateData {
+export interface GenerateSuccessRateData {
 	date: string;
 	rate: number;
 }
 
-export interface TimelineData {
+export interface GenerateTimelineData {
 	time: string;
 	orders: number;
 }
 
-export interface RobotUtilizationData {
+export interface GenerateRobotUtilizationData {
 	robotUtilization: number;
 	chargeCycles: number;
 	activeTime: string;
@@ -33,155 +33,753 @@ export interface RobotUtilizationData {
 	errorTime: string;
 }
 
-// Mock data generator functions
-export const generateMetricsData = (
-	robot: RobotId,
-	period: TimePeriod,
-): MetricsData => {
-	const baseData = {
-		all: {
+export const MetricsData: Record<
+	RobotId,
+	Record<TimePeriod, GenerateMetricsData>
+> = {
+	all: {
+		"24hours": {
+			successRate: 88,
+			assignedRequests: 14,
+			completedRequests: 12,
+			failedRequests: 2,
+		},
+		"7days": {
 			successRate: 88,
 			assignedRequests: 45,
 			completedRequests: 40,
 			failedRequests: 5,
 		},
-		ARTOO2025: {
+		"30days": {
+			successRate: 88,
+			assignedRequests: 180,
+			completedRequests: 160,
+			failedRequests: 20,
+		},
+		custom: {
+			successRate: 88,
+			assignedRequests: 90,
+			completedRequests: 80,
+			failedRequests: 10,
+		},
+	},
+	ARTOO2025: {
+		"24hours": {
+			successRate: 92,
+			assignedRequests: 5,
+			completedRequests: 4,
+			failedRequests: 1,
+		},
+		"7days": {
 			successRate: 92,
 			assignedRequests: 15,
 			completedRequests: 14,
 			failedRequests: 1,
 		},
-		ARTOO2026: {
+		"30days": {
+			successRate: 92,
+			assignedRequests: 60,
+			completedRequests: 56,
+			failedRequests: 4,
+		},
+		custom: {
+			successRate: 92,
+			assignedRequests: 30,
+			completedRequests: 28,
+			failedRequests: 2,
+		},
+	},
+	ARTOO2026: {
+		"24hours": {
+			successRate: 85,
+			assignedRequests: 5,
+			completedRequests: 4,
+			failedRequests: 1,
+		},
+		"7days": {
 			successRate: 85,
 			assignedRequests: 18,
 			completedRequests: 15,
 			failedRequests: 3,
 		},
-		ARTOO2027: {
+		"30days": {
+			successRate: 85,
+			assignedRequests: 72,
+			completedRequests: 60,
+			failedRequests: 12,
+		},
+		custom: {
+			successRate: 85,
+			assignedRequests: 36,
+			completedRequests: 30,
+			failedRequests: 6,
+		},
+	},
+	ARTOO2027: {
+		"24hours": {
+			successRate: 90,
+			assignedRequests: 4,
+			completedRequests: 3,
+			failedRequests: 1,
+		},
+		"7days": {
 			successRate: 90,
 			assignedRequests: 12,
 			completedRequests: 11,
 			failedRequests: 1,
 		},
-	};
-
-	const periodMultiplier = {
-		"24hours": 0.3,
-		"7days": 1,
-		"30days": 4,
-		custom: 2,
-	};
-
-	const data = baseData[robot];
-	const multiplier = periodMultiplier[period];
-
-	return {
-		successRate: data.successRate,
-		assignedRequests: Math.round(data.assignedRequests * multiplier),
-		completedRequests: Math.round(data.completedRequests * multiplier),
-		failedRequests: Math.round(data.failedRequests * multiplier),
-	};
+		"30days": {
+			successRate: 90,
+			assignedRequests: 48,
+			completedRequests: 44,
+			failedRequests: 4,
+		},
+		custom: {
+			successRate: 90,
+			assignedRequests: 24,
+			completedRequests: 22,
+			failedRequests: 2,
+		},
+	},
 };
 
-export const generateChartData = (
-	robot: RobotId,
-	period: TimePeriod,
-): ChartData[] => {
-	const periods = {
-		"24hours": Array.from({ length: 24 }, (_, i) => `${i}:00`),
-		"7days": Array.from({ length: 7 }, (_, i) => `Day ${i + 1}`),
-		"30days": Array.from({ length: 30 }, (_, i) => `${i + 1} Mar`),
-		custom: Array.from({ length: 10 }, (_, i) => `${i + 12} Mar`),
-	};
-
-	const robotMultiplier = {
-		all: 1,
-		ARTOO2025: 0.4,
-		ARTOO2026: 0.35,
-		ARTOO2027: 0.25,
-	};
-
-	// Use seeded values instead of random
-	const baseAssigned = [80, 100, 120, 110, 280, 100, 60, 180, 100, 160];
-	const baseCompleted = [75, 95, 110, 105, 260, 90, 55, 170, 95, 150];
-
-	return periods[period].map((date, index) => ({
-		date,
-		assigned: Math.round(
-			baseAssigned[index % baseAssigned.length] * robotMultiplier[robot],
-		),
-		completed: Math.round(
-			baseCompleted[index % baseCompleted.length] * robotMultiplier[robot],
-		),
-	}));
+export const ChartData: Record<
+	RobotId,
+	Record<TimePeriod, GenerateChartData[]>
+> = {
+	all: {
+		"24hours": [
+			{ date: "0:00", assigned: 80, completed: 75 },
+			{ date: "1:00", assigned: 100, completed: 95 },
+			{ date: "2:00", assigned: 120, completed: 110 },
+			{ date: "3:00", assigned: 110, completed: 105 },
+			{ date: "4:00", assigned: 280, completed: 260 },
+			{ date: "5:00", assigned: 100, completed: 90 },
+			{ date: "6:00", assigned: 60, completed: 55 },
+			{ date: "7:00", assigned: 180, completed: 170 },
+			{ date: "8:00", assigned: 100, completed: 95 },
+			{ date: "9:00", assigned: 160, completed: 150 },
+			{ date: "10:00", assigned: 80, completed: 75 },
+			{ date: "11:00", assigned: 100, completed: 95 },
+			{ date: "12:00", assigned: 120, completed: 110 },
+			{ date: "13:00", assigned: 110, completed: 105 },
+			{ date: "14:00", assigned: 280, completed: 260 },
+			{ date: "15:00", assigned: 100, completed: 90 },
+			{ date: "16:00", assigned: 60, completed: 55 },
+			{ date: "17:00", assigned: 180, completed: 170 },
+			{ date: "18:00", assigned: 100, completed: 95 },
+			{ date: "19:00", assigned: 160, completed: 150 },
+			{ date: "20:00", assigned: 80, completed: 75 },
+			{ date: "21:00", assigned: 100, completed: 95 },
+			{ date: "22:00", assigned: 120, completed: 110 },
+			{ date: "23:00", assigned: 110, completed: 105 },
+		],
+		"7days": [
+			{ date: "Day 1", assigned: 80, completed: 75 },
+			{ date: "Day 2", assigned: 100, completed: 95 },
+			{ date: "Day 3", assigned: 120, completed: 110 },
+			{ date: "Day 4", assigned: 110, completed: 105 },
+			{ date: "Day 5", assigned: 280, completed: 260 },
+			{ date: "Day 6", assigned: 100, completed: 90 },
+			{ date: "Day 7", assigned: 60, completed: 55 },
+		],
+		"30days": Array.from({ length: 30 }, (_, i) => ({
+			date: `${i + 1} Mar`,
+			assigned: [80, 100, 120, 110, 280, 100, 60, 180, 100, 160][i % 10],
+			completed: [75, 95, 110, 105, 260, 90, 55, 170, 95, 150][i % 10],
+		})),
+		custom: Array.from({ length: 10 }, (_, i) => ({
+			date: `${i + 12} Mar`,
+			assigned: [80, 100, 120, 110, 280, 100, 60, 180, 100, 160][i],
+			completed: [75, 95, 110, 105, 260, 90, 55, 170, 95, 150][i],
+		})),
+	},
+	ARTOO2025: {
+		"24hours": [
+			{ date: "0:00", assigned: 32, completed: 30 },
+			{ date: "1:00", assigned: 40, completed: 38 },
+			{ date: "2:00", assigned: 48, completed: 44 },
+			{ date: "3:00", assigned: 44, completed: 42 },
+			{ date: "4:00", assigned: 112, completed: 104 },
+			{ date: "5:00", assigned: 40, completed: 36 },
+			{ date: "6:00", assigned: 24, completed: 22 },
+			{ date: "7:00", assigned: 72, completed: 68 },
+			{ date: "8:00", assigned: 40, completed: 38 },
+			{ date: "9:00", assigned: 64, completed: 60 },
+			{ date: "10:00", assigned: 32, completed: 30 },
+			{ date: "11:00", assigned: 40, completed: 38 },
+			{ date: "12:00", assigned: 48, completed: 44 },
+			{ date: "13:00", assigned: 44, completed: 42 },
+			{ date: "14:00", assigned: 112, completed: 104 },
+			{ date: "15:00", assigned: 40, completed: 36 },
+			{ date: "16:00", assigned: 24, completed: 22 },
+			{ date: "17:00", assigned: 72, completed: 68 },
+			{ date: "18:00", assigned: 40, completed: 38 },
+			{ date: "19:00", assigned: 64, completed: 60 },
+			{ date: "20:00", assigned: 32, completed: 30 },
+			{ date: "21:00", assigned: 40, completed: 38 },
+			{ date: "22:00", assigned: 48, completed: 44 },
+			{ date: "23:00", assigned: 44, completed: 42 },
+		],
+		"7days": [
+			{ date: "Day 1", assigned: 32, completed: 30 },
+			{ date: "Day 2", assigned: 40, completed: 38 },
+			{ date: "Day 3", assigned: 48, completed: 44 },
+			{ date: "Day 4", assigned: 44, completed: 42 },
+			{ date: "Day 5", assigned: 112, completed: 104 },
+			{ date: "Day 6", assigned: 40, completed: 36 },
+			{ date: "Day 7", assigned: 24, completed: 22 },
+		],
+		"30days": Array.from({ length: 30 }, (_, i) => ({
+			date: `${i + 1} Mar`,
+			assigned: [32, 40, 48, 44, 112, 40, 24, 72, 40, 64][i % 10],
+			completed: [30, 38, 44, 42, 104, 36, 22, 68, 38, 60][i % 10],
+		})),
+		custom: Array.from({ length: 10 }, (_, i) => ({
+			date: `${i + 12} Mar`,
+			assigned: [32, 40, 48, 44, 112, 40, 24, 72, 40, 64][i],
+			completed: [30, 38, 44, 42, 104, 36, 22, 68, 38, 60][i],
+		})),
+	},
+	ARTOO2026: {
+		"24hours": [
+			{ date: "0:00", assigned: 28, completed: 26 },
+			{ date: "1:00", assigned: 35, completed: 33 },
+			{ date: "2:00", assigned: 42, completed: 39 },
+			{ date: "3:00", assigned: 39, completed: 37 },
+			{ date: "4:00", assigned: 98, completed: 91 },
+			{ date: "5:00", assigned: 35, completed: 32 },
+			{ date: "6:00", assigned: 21, completed: 19 },
+			{ date: "7:00", assigned: 63, completed: 60 },
+			{ date: "8:00", assigned: 35, completed: 33 },
+			{ date: "9:00", assigned: 56, completed: 53 },
+			{ date: "10:00", assigned: 28, completed: 26 },
+			{ date: "11:00", assigned: 35, completed: 33 },
+			{ date: "12:00", assigned: 42, completed: 39 },
+			{ date: "13:00", assigned: 39, completed: 37 },
+			{ date: "14:00", assigned: 98, completed: 91 },
+			{ date: "15:00", assigned: 35, completed: 32 },
+			{ date: "16:00", assigned: 21, completed: 19 },
+			{ date: "17:00", assigned: 63, completed: 60 },
+			{ date: "18:00", assigned: 35, completed: 33 },
+			{ date: "19:00", assigned: 56, completed: 53 },
+			{ date: "20:00", assigned: 28, completed: 26 },
+			{ date: "21:00", assigned: 35, completed: 33 },
+			{ date: "22:00", assigned: 42, completed: 39 },
+			{ date: "23:00", assigned: 39, completed: 37 },
+		],
+		"7days": [
+			{ date: "Day 1", assigned: 28, completed: 26 },
+			{ date: "Day 2", assigned: 35, completed: 33 },
+			{ date: "Day 3", assigned: 42, completed: 39 },
+			{ date: "Day 4", assigned: 39, completed: 37 },
+			{ date: "Day 5", assigned: 98, completed: 91 },
+			{ date: "Day 6", assigned: 35, completed: 32 },
+			{ date: "Day 7", assigned: 21, completed: 19 },
+		],
+		"30days": Array.from({ length: 30 }, (_, i) => ({
+			date: `${i + 1} Mar`,
+			assigned: [28, 35, 42, 39, 98, 35, 21, 63, 35, 56][i % 10],
+			completed: [26, 33, 39, 37, 91, 32, 19, 60, 33, 53][i % 10],
+		})),
+		custom: Array.from({ length: 10 }, (_, i) => ({
+			date: `${i + 12} Mar`,
+			assigned: [28, 35, 42, 39, 98, 35, 21, 63, 35, 56][i],
+			completed: [26, 33, 39, 37, 91, 32, 19, 60, 33, 53][i],
+		})),
+	},
+	ARTOO2027: {
+		"24hours": [
+			{ date: "0:00", assigned: 20, completed: 19 },
+			{ date: "1:00", assigned: 25, completed: 24 },
+			{ date: "2:00", assigned: 30, completed: 28 },
+			{ date: "3:00", assigned: 28, completed: 26 },
+			{ date: "4:00", assigned: 70, completed: 65 },
+			{ date: "5:00", assigned: 25, completed: 23 },
+			{ date: "6:00", assigned: 15, completed: 14 },
+			{ date: "7:00", assigned: 45, completed: 43 },
+			{ date: "8:00", assigned: 25, completed: 24 },
+			{ date: "9:00", assigned: 40, completed: 38 },
+			{ date: "10:00", assigned: 20, completed: 19 },
+			{ date: "11:00", assigned: 25, completed: 24 },
+			{ date: "12:00", assigned: 30, completed: 28 },
+			{ date: "13:00", assigned: 28, completed: 26 },
+			{ date: "14:00", assigned: 70, completed: 65 },
+			{ date: "15:00", assigned: 25, completed: 23 },
+			{ date: "16:00", assigned: 15, completed: 14 },
+			{ date: "17:00", assigned: 45, completed: 43 },
+			{ date: "18:00", assigned: 25, completed: 24 },
+			{ date: "19:00", assigned: 40, completed: 38 },
+			{ date: "20:00", assigned: 20, completed: 19 },
+			{ date: "21:00", assigned: 25, completed: 24 },
+			{ date: "22:00", assigned: 30, completed: 28 },
+			{ date: "23:00", assigned: 28, completed: 26 },
+		],
+		"7days": [
+			{ date: "Day 1", assigned: 20, completed: 19 },
+			{ date: "Day 2", assigned: 25, completed: 24 },
+			{ date: "Day 3", assigned: 30, completed: 28 },
+			{ date: "Day 4", assigned: 28, completed: 26 },
+			{ date: "Day 5", assigned: 70, completed: 65 },
+			{ date: "Day 6", assigned: 25, completed: 23 },
+			{ date: "Day 7", assigned: 15, completed: 14 },
+		],
+		"30days": Array.from({ length: 30 }, (_, i) => ({
+			date: `${i + 1} Mar`,
+			assigned: [20, 25, 30, 28, 70, 25, 15, 45, 25, 40][i % 10],
+			completed: [19, 24, 28, 26, 65, 23, 14, 43, 24, 38][i % 10],
+		})),
+		custom: Array.from({ length: 10 }, (_, i) => ({
+			date: `${i + 12} Mar`,
+			assigned: [20, 25, 30, 28, 70, 25, 15, 45, 25, 40][i],
+			completed: [19, 24, 28, 26, 65, 23, 14, 43, 24, 38][i],
+		})),
+	},
 };
 
-export const generateSuccessRateData = (
-	robot: RobotId,
-	period: TimePeriod,
-): SuccessRateData[] => {
-	const periods = {
-		"24hours": Array.from({ length: 24 }, (_, i) => `${i}:00`),
-		"7days": Array.from({ length: 7 }, (_, i) => `Day ${i + 1}`),
-		"30days": Array.from({ length: 30 }, (_, i) => `${i + 1}`),
-		custom: Array.from({ length: 10 }, (_, i) => `${i + 12}`),
-	};
-
-	const robotBaseRate = {
-		all: 88,
-		ARTOO2025: 92,
-		ARTOO2026: 85,
-		ARTOO2027: 90,
-	};
-
-	// Use seeded values instead of random
-	const variations = [
-		2, -1, 3, 1, -2, 4, -3, 2, 1, -1, 3, -2, 1, 4, -1, 2, -3, 1, 3, -2,
-	];
-
-	return periods[period].map((date, index) => ({
-		date,
-		rate: Math.max(
-			70,
-			Math.min(
-				100,
-				robotBaseRate[robot] + variations[index % variations.length],
-			),
-		),
-	}));
+export const SuccessRateData: Record<
+	RobotId,
+	Record<TimePeriod, GenerateSuccessRateData[]>
+> = {
+	all: {
+		"24hours": [
+			{ date: "0:00", rate: 90 },
+			{ date: "1:00", rate: 87 },
+			{ date: "2:00", rate: 91 },
+			{ date: "3:00", rate: 89 },
+			{ date: "4:00", rate: 86 },
+			{ date: "5:00", rate: 30 },
+			{ date: "6:00", rate: 85 },
+			{ date: "7:00", rate: 90 },
+			{ date: "8:00", rate: 89 },
+			{ date: "9:00", rate: 87 },
+			{ date: "10:00", rate: 91 },
+			{ date: "11:00", rate: 86 },
+			{ date: "12:00", rate: 89 },
+			{ date: "13:00", rate: 92 },
+			{ date: "14:00", rate: 87 },
+			{ date: "15:00", rate: 30 },
+			{ date: "16:00", rate: 85 },
+			{ date: "17:00", rate: 89 },
+			{ date: "18:00", rate: 91 },
+			{ date: "19:00", rate: 86 },
+			{ date: "20:00", rate: 88 },
+			{ date: "21:00", rate: 90 },
+			{ date: "22:00", rate: 87 },
+			{ date: "23:00", rate: 91 },
+		],
+		"7days": [
+			{ date: "Day 1", rate: 90 },
+			{ date: "Day 2", rate: 87 },
+			{ date: "Day 3", rate: 30 },
+			{ date: "Day 4", rate: 89 },
+			{ date: "Day 5", rate: 86 },
+			{ date: "Day 6", rate: 92 },
+			{ date: "Day 7", rate: 85 },
+		],
+		"30days": Array.from({ length: 30 }, (_, i) => ({
+			date: `${i + 1}`,
+			rate: [90, 87, 21, 89, 86, 92, 85, 90, 89, 87][i % 10],
+		})),
+		custom: Array.from({ length: 10 }, (_, i) => ({
+			date: `${i + 12}`,
+			rate: [90, 87, 91, 89, 86, 92, 85, 90, 89, 87][i],
+		})),
+	},
+	ARTOO2025: {
+		"24hours": [
+			{ date: "0:00", rate: 94 },
+			{ date: "1:00", rate: 91 },
+			{ date: "2:00", rate: 95 },
+			{ date: "3:00", rate: 93 },
+			{ date: "4:00", rate: 90 },
+			{ date: "5:00", rate: 96 },
+			{ date: "6:00", rate: 89 },
+			{ date: "7:00", rate: 94 },
+			{ date: "8:00", rate: 93 },
+			{ date: "9:00", rate: 91 },
+			{ date: "10:00", rate: 95 },
+			{ date: "11:00", rate: 90 },
+			{ date: "12:00", rate: 93 },
+			{ date: "13:00", rate: 96 },
+			{ date: "14:00", rate: 91 },
+			{ date: "15:00", rate: 94 },
+			{ date: "16:00", rate: 89 },
+			{ date: "17:00", rate: 93 },
+			{ date: "18:00", rate: 95 },
+			{ date: "19:00", rate: 90 },
+			{ date: "20:00", rate: 92 },
+			{ date: "21:00", rate: 94 },
+			{ date: "22:00", rate: 91 },
+			{ date: "23:00", rate: 95 },
+		],
+		"7days": [
+			{ date: "Day 1", rate: 94 },
+			{ date: "Day 2", rate: 91 },
+			{ date: "Day 3", rate: 95 },
+			{ date: "Day 4", rate: 93 },
+			{ date: "Day 5", rate: 90 },
+			{ date: "Day 6", rate: 96 },
+			{ date: "Day 7", rate: 89 },
+		],
+		"30days": Array.from({ length: 30 }, (_, i) => ({
+			date: `${i + 1}`,
+			rate: [94, 91, 95, 93, 90, 96, 89, 94, 93, 91][i % 10],
+		})),
+		custom: Array.from({ length: 10 }, (_, i) => ({
+			date: `${i + 12}`,
+			rate: [94, 91, 95, 93, 90, 96, 89, 94, 93, 91][i],
+		})),
+	},
+	ARTOO2026: {
+		"24hours": [
+			{ date: "0:00", rate: 87 },
+			{ date: "1:00", rate: 84 },
+			{ date: "2:00", rate: 88 },
+			{ date: "3:00", rate: 86 },
+			{ date: "4:00", rate: 83 },
+			{ date: "5:00", rate: 89 },
+			{ date: "6:00", rate: 82 },
+			{ date: "7:00", rate: 87 },
+			{ date: "8:00", rate: 86 },
+			{ date: "9:00", rate: 84 },
+			{ date: "10:00", rate: 88 },
+			{ date: "11:00", rate: 83 },
+			{ date: "12:00", rate: 86 },
+			{ date: "13:00", rate: 89 },
+			{ date: "14:00", rate: 84 },
+			{ date: "15:00", rate: 87 },
+			{ date: "16:00", rate: 82 },
+			{ date: "17:00", rate: 86 },
+			{ date: "18:00", rate: 88 },
+			{ date: "19:00", rate: 83 },
+			{ date: "20:00", rate: 85 },
+			{ date: "21:00", rate: 87 },
+			{ date: "22:00", rate: 84 },
+			{ date: "23:00", rate: 88 },
+		],
+		"7days": [
+			{ date: "Day 1", rate: 87 },
+			{ date: "Day 2", rate: 84 },
+			{ date: "Day 3", rate: 88 },
+			{ date: "Day 4", rate: 86 },
+			{ date: "Day 5", rate: 83 },
+			{ date: "Day 6", rate: 89 },
+			{ date: "Day 7", rate: 82 },
+		],
+		"30days": Array.from({ length: 30 }, (_, i) => ({
+			date: `${i + 1}`,
+			rate: [87, 84, 88, 86, 83, 89, 82, 87, 86, 84][i % 10],
+		})),
+		custom: Array.from({ length: 10 }, (_, i) => ({
+			date: `${i + 12}`,
+			rate: [87, 84, 88, 86, 83, 89, 82, 87, 86, 84][i],
+		})),
+	},
+	ARTOO2027: {
+		"24hours": [
+			{ date: "0:00", rate: 92 },
+			{ date: "1:00", rate: 89 },
+			{ date: "2:00", rate: 93 },
+			{ date: "3:00", rate: 91 },
+			{ date: "4:00", rate: 88 },
+			{ date: "5:00", rate: 94 },
+			{ date: "6:00", rate: 87 },
+			{ date: "7:00", rate: 92 },
+			{ date: "8:00", rate: 91 },
+			{ date: "9:00", rate: 89 },
+			{ date: "10:00", rate: 93 },
+			{ date: "11:00", rate: 88 },
+			{ date: "12:00", rate: 91 },
+			{ date: "13:00", rate: 94 },
+			{ date: "14:00", rate: 89 },
+			{ date: "15:00", rate: 92 },
+			{ date: "16:00", rate: 87 },
+			{ date: "17:00", rate: 91 },
+			{ date: "18:00", rate: 93 },
+			{ date: "19:00", rate: 88 },
+			{ date: "20:00", rate: 90 },
+			{ date: "21:00", rate: 92 },
+			{ date: "22:00", rate: 89 },
+			{ date: "23:00", rate: 93 },
+		],
+		"7days": [
+			{ date: "Day 1", rate: 92 },
+			{ date: "Day 2", rate: 89 },
+			{ date: "Day 3", rate: 93 },
+			{ date: "Day 4", rate: 91 },
+			{ date: "Day 5", rate: 88 },
+			{ date: "Day 6", rate: 94 },
+			{ date: "Day 7", rate: 87 },
+		],
+		"30days": Array.from({ length: 30 }, (_, i) => ({
+			date: `${i + 1}`,
+			rate: [92, 89, 93, 91, 88, 94, 87, 92, 91, 89][i % 10],
+		})),
+		custom: Array.from({ length: 10 }, (_, i) => ({
+			date: `${i + 12}`,
+			rate: [92, 89, 93, 91, 88, 94, 87, 92, 91, 89][i],
+		})),
+	},
 };
 
-export const generateTimelineData = (
-	robot: RobotId,
-	period: TimePeriod,
-): TimelineData[] => {
-	const robotMultiplier = {
-		all: 1,
-		ARTOO2025: 0.4,
-		ARTOO2026: 0.35,
-		ARTOO2027: 0.25,
-	};
-
-	// Generate data for 10 hours (10:00 to 19:50) with 10-minute intervals
-	return Array.from({ length: 10 * 6 }, (_, i) => {
-		const hour = Math.floor(i / 6) + 10;
-		const minute = (i % 6) * 10;
-		const baseValue =
-			15 + Math.sin((hour - 10) * 0.5) * 20 + Math.random() * 15;
-
-		return {
-			time: `${String(hour).padStart(2, "0")}:${String(minute).padStart(2, "0")}`,
-			orders: Math.round(baseValue * robotMultiplier[robot]),
-		};
-	});
+export const TimelineData: Record<RobotId, GenerateTimelineData[]> = {
+	all: [
+		{ time: "10:00", orders: 25 },
+		{ time: "10:10", orders: 22 },
+		{ time: "10:20", orders: 39 },
+		{ time: "10:30", orders: 60 },
+		{ time: "10:40", orders: 42 },
+		{ time: "10:50", orders: 43 },
+		{ time: "11:00", orders: 45 },
+		{ time: "11:10", orders: 46 },
+		{ time: "11:20", orders: 80 },
+		{ time: "11:30", orders: 49 },
+		{ time: "11:40", orders: 50 },
+		{ time: "11:50", orders: 52 },
+		{ time: "12:00", orders: 53 },
+		{ time: "12:10", orders: 54 },
+		{ time: "12:20", orders: 55 },
+		{ time: "12:30", orders: 5 },
+		{ time: "12:40", orders: 57 },
+		{ time: "12:50", orders: 58 },
+		{ time: "13:00", orders: 59 },
+		{ time: "13:10", orders: 60 },
+		{ time: "13:20", orders: 61 },
+		{ time: "13:30", orders: 25 },
+		{ time: "13:40", orders: 63 },
+		{ time: "13:50", orders: 64 },
+		{ time: "14:00", orders: 65 },
+		{ time: "14:10", orders: 66 },
+		{ time: "14:20", orders: 67 },
+		{ time: "14:30", orders: 68 },
+		{ time: "14:40", orders: 69 },
+		{ time: "14:50", orders: 70 },
+		{ time: "15:00", orders: 23 },
+		{ time: "15:10", orders: 72 },
+		{ time: "15:20", orders: 73 },
+		{ time: "15:30", orders: 74 },
+		{ time: "15:40", orders: 75 },
+		{ time: "15:50", orders: 76 },
+		{ time: "16:00", orders: 77 },
+		{ time: "16:10", orders: 78 },
+		{ time: "16:20", orders: 79 },
+		{ time: "16:30", orders: 80 },
+		{ time: "16:40", orders: 32 },
+		{ time: "16:50", orders: 82 },
+		{ time: "17:00", orders: 83 },
+		{ time: "17:10", orders: 16 },
+		{ time: "17:20", orders: 85 },
+		{ time: "17:30", orders: 65 },
+		{ time: "17:40", orders: 87 },
+		{ time: "17:50", orders: 88 },
+		{ time: "18:00", orders: 14 },
+		{ time: "18:10", orders: 90 },
+		{ time: "18:20", orders: 91 },
+		{ time: "18:30", orders: 92 },
+		{ time: "18:40", orders: 93 },
+		{ time: "18:50", orders: 94 },
+		{ time: "19:00", orders: 95 },
+		{ time: "19:10", orders: 53 },
+		{ time: "19:20", orders: 97 },
+		{ time: "19:30", orders: 98 },
+		{ time: "19:40", orders: 68 },
+		{ time: "19:50", orders: 100 },
+	],
+	ARTOO2025: [
+		{ time: "10:00", orders: 14 },
+		{ time: "10:10", orders: 15 },
+		{ time: "10:20", orders: 16 },
+		{ time: "10:30", orders: 16 },
+		{ time: "10:40", orders: 17 },
+		{ time: "10:50", orders: 17 },
+		{ time: "11:00", orders: 18 },
+		{ time: "11:10", orders: 18 },
+		{ time: "11:20", orders: 19 },
+		{ time: "11:30", orders: 20 },
+		{ time: "11:40", orders: 20 },
+		{ time: "11:50", orders: 21 },
+		{ time: "12:00", orders: 21 },
+		{ time: "12:10", orders: 22 },
+		{ time: "12:20", orders: 22 },
+		{ time: "12:30", orders: 22 },
+		{ time: "12:40", orders: 23 },
+		{ time: "12:50", orders: 23 },
+		{ time: "13:00", orders: 24 },
+		{ time: "13:10", orders: 24 },
+		{ time: "13:20", orders: 24 },
+		{ time: "13:30", orders: 25 },
+		{ time: "13:40", orders: 25 },
+		{ time: "13:50", orders: 26 },
+		{ time: "14:00", orders: 26 },
+		{ time: "14:10", orders: 26 },
+		{ time: "14:20", orders: 27 },
+		{ time: "14:30", orders: 27 },
+		{ time: "14:40", orders: 28 },
+		{ time: "14:50", orders: 28 },
+		{ time: "15:00", orders: 28 },
+		{ time: "15:10", orders: 29 },
+		{ time: "15:20", orders: 29 },
+		{ time: "15:30", orders: 30 },
+		{ time: "15:40", orders: 30 },
+		{ time: "15:50", orders: 30 },
+		{ time: "16:00", orders: 31 },
+		{ time: "16:10", orders: 31 },
+		{ time: "16:20", orders: 32 },
+		{ time: "16:30", orders: 32 },
+		{ time: "16:40", orders: 32 },
+		{ time: "16:50", orders: 33 },
+		{ time: "17:00", orders: 33 },
+		{ time: "17:10", orders: 34 },
+		{ time: "17:20", orders: 34 },
+		{ time: "17:30", orders: 34 },
+		{ time: "17:40", orders: 25 },
+		{ time: "17:50", orders: 25 },
+		{ time: "18:00", orders: 36 },
+		{ time: "18:10", orders: 36 },
+		{ time: "18:20", orders: 36 },
+		{ time: "18:30", orders: 37 },
+		{ time: "18:40", orders: 37 },
+		{ time: "18:50", orders: 38 },
+		{ time: "19:00", orders: 38 },
+		{ time: "19:10", orders: 38 },
+		{ time: "19:20", orders: 39 },
+		{ time: "19:30", orders: 39 },
+		{ time: "19:40", orders: 40 },
+		{ time: "19:50", orders: 40 },
+	],
+	ARTOO2026: [
+		{ time: "10:00", orders: 12 },
+		{ time: "10:10", orders: 13 },
+		{ time: "10:20", orders: 14 },
+		{ time: "10:30", orders: 14 },
+		{ time: "10:40", orders: 15 },
+		{ time: "10:50", orders: 15 },
+		{ time: "11:00", orders: 16 },
+		{ time: "11:10", orders: 16 },
+		{ time: "11:20", orders: 17 },
+		{ time: "11:30", orders: 17 },
+		{ time: "11:40", orders: 18 },
+		{ time: "11:50", orders: 18 },
+		{ time: "12:00", orders: 19 },
+		{ time: "12:10", orders: 19 },
+		{ time: "12:20", orders: 19 },
+		{ time: "12:30", orders: 20 },
+		{ time: "12:40", orders: 20 },
+		{ time: "12:50", orders: 20 },
+		{ time: "13:00", orders: 21 },
+		{ time: "13:10", orders: 21 },
+		{ time: "13:20", orders: 21 },
+		{ time: "13:30", orders: 22 },
+		{ time: "13:40", orders: 22 },
+		{ time: "13:50", orders: 22 },
+		{ time: "14:00", orders: 23 },
+		{ time: "14:10", orders: 23 },
+		{ time: "14:20", orders: 23 },
+		{ time: "14:30", orders: 24 },
+		{ time: "14:40", orders: 24 },
+		{ time: "14:50", orders: 24 },
+		{ time: "15:00", orders: 25 },
+		{ time: "15:10", orders: 25 },
+		{ time: "15:20", orders: 26 },
+		{ time: "15:30", orders: 26 },
+		{ time: "15:40", orders: 26 },
+		{ time: "15:50", orders: 27 },
+		{ time: "16:00", orders: 27 },
+		{ time: "16:10", orders: 27 },
+		{ time: "16:20", orders: 28 },
+		{ time: "16:30", orders: 28 },
+		{ time: "16:40", orders: 28 },
+		{ time: "16:50", orders: 29 },
+		{ time: "17:00", orders: 29 },
+		{ time: "17:10", orders: 29 },
+		{ time: "17:20", orders: 30 },
+		{ time: "17:30", orders: 30 },
+		{ time: "17:40", orders: 30 },
+		{ time: "17:50", orders: 31 },
+		{ time: "18:00", orders: 31 },
+		{ time: "18:10", orders: 31 },
+		{ time: "18:20", orders: 32 },
+		{ time: "18:30", orders: 32 },
+		{ time: "18:40", orders: 33 },
+		{ time: "18:50", orders: 33 },
+		{ time: "19:00", orders: 33 },
+		{ time: "19:10", orders: 34 },
+		{ time: "19:20", orders: 34 },
+		{ time: "19:30", orders: 34 },
+		{ time: "19:40", orders: 25 },
+		{ time: "19:50", orders: 25 },
+	],
+	ARTOO2027: [
+		{ time: "10:00", orders: 9 },
+		{ time: "10:10", orders: 9 },
+		{ time: "10:20", orders: 10 },
+		{ time: "10:30", orders: 10 },
+		{ time: "10:40", orders: 11 },
+		{ time: "10:50", orders: 11 },
+		{ time: "11:00", orders: 11 },
+		{ time: "11:10", orders: 12 },
+		{ time: "11:20", orders: 12 },
+		{ time: "11:30", orders: 12 },
+		{ time: "11:40", orders: 13 },
+		{ time: "11:50", orders: 13 },
+		{ time: "12:00", orders: 13 },
+		{ time: "12:10", orders: 14 },
+		{ time: "12:20", orders: 14 },
+		{ time: "12:30", orders: 14 },
+		{ time: "12:40", orders: 15 },
+		{ time: "12:50", orders: 15 },
+		{ time: "13:00", orders: 15 },
+		{ time: "13:10", orders: 15 },
+		{ time: "13:20", orders: 16 },
+		{ time: "13:30", orders: 16 },
+		{ time: "13:40", orders: 16 },
+		{ time: "13:50", orders: 16 },
+		{ time: "14:00", orders: 16 },
+		{ time: "14:10", orders: 17 },
+		{ time: "14:20", orders: 17 },
+		{ time: "14:30", orders: 17 },
+		{ time: "14:40", orders: 17 },
+		{ time: "14:50", orders: 18 },
+		{ time: "15:00", orders: 18 },
+		{ time: "15:10", orders: 18 },
+		{ time: "15:20", orders: 18 },
+		{ time: "15:30", orders: 19 },
+		{ time: "15:40", orders: 19 },
+		{ time: "15:50", orders: 19 },
+		{ time: "16:00", orders: 19 },
+		{ time: "16:10", orders: 20 },
+		{ time: "16:20", orders: 20 },
+		{ time: "16:30", orders: 20 },
+		{ time: "16:40", orders: 20 },
+		{ time: "16:50", orders: 21 },
+		{ time: "17:00", orders: 21 },
+		{ time: "17:10", orders: 21 },
+		{ time: "17:20", orders: 21 },
+		{ time: "17:30", orders: 22 },
+		{ time: "17:40", orders: 22 },
+		{ time: "17:50", orders: 22 },
+		{ time: "18:00", orders: 22 },
+		{ time: "18:10", orders: 23 },
+		{ time: "18:20", orders: 23 },
+		{ time: "18:30", orders: 23 },
+		{ time: "18:40", orders: 23 },
+		{ time: "18:50", orders: 24 },
+		{ time: "19:00", orders: 24 },
+		{ time: "19:10", orders: 24 },
+		{ time: "19:20", orders: 24 },
+		{ time: "19:30", orders: 25 },
+		{ time: "19:40", orders: 25 },
+		{ time: "19:50", orders: 25 },
+	],
 };
 
-export const generateRobotUtilizationData = (
-	robot: RobotId,
-	period: TimePeriod,
-): RobotUtilizationData => {
-	const baseData = {
-		all: {
+export const RobotUtilizationData: Record<
+	RobotId,
+	Record<TimePeriod, GenerateRobotUtilizationData>
+> = {
+	all: {
+		"24hours": {
 			robotUtilization: 70,
 			chargeCycles: 150,
 			activeTime: "7 hours",
@@ -189,7 +787,33 @@ export const generateRobotUtilizationData = (
 			chargingTime: "6 hours",
 			errorTime: "1 hours",
 		},
-		ARTOO2025: {
+		"7days": {
+			robotUtilization: 70,
+			chargeCycles: 1050,
+			activeTime: "49 hours",
+			idleTime: "294 Minutes",
+			chargingTime: "42 hours",
+			errorTime: "7 hours",
+		},
+		"30days": {
+			robotUtilization: 70,
+			chargeCycles: 4500,
+			activeTime: "210 hours",
+			idleTime: "1260 Minutes",
+			chargingTime: "180 hours",
+			errorTime: "30 hours",
+		},
+		custom: {
+			robotUtilization: 70,
+			chargeCycles: 2100,
+			activeTime: "98 hours",
+			idleTime: "588 Minutes",
+			chargingTime: "84 hours",
+			errorTime: "14 hours",
+		},
+	},
+	ARTOO2025: {
+		"24hours": {
 			robotUtilization: 85,
 			chargeCycles: 45,
 			activeTime: "8.5 hours",
@@ -197,7 +821,33 @@ export const generateRobotUtilizationData = (
 			chargingTime: "5 hours",
 			errorTime: "30 Minutes",
 		},
-		ARTOO2026: {
+		"7days": {
+			robotUtilization: 85,
+			chargeCycles: 315,
+			activeTime: "59.5 hours",
+			idleTime: "210 Minutes",
+			chargingTime: "25 hours",
+			errorTime: "210 Minutes",
+		},
+		"30days": {
+			robotUtilization: 85,
+			chargeCycles: 1350,
+			activeTime: "255 hours",
+			idleTime: "900 Minutes",
+			chargingTime: "150 hours",
+			errorTime: "900 Minutes",
+		},
+		custom: {
+			robotUtilization: 85,
+			chargeCycles: 630,
+			activeTime: "119 hours",
+			idleTime: "420 Minutes",
+			chargingTime: "70 hours",
+			errorTime: "420 Minutes",
+		},
+	},
+	ARTOO2026: {
+		"24hours": {
 			robotUtilization: 65,
 			chargeCycles: 52,
 			activeTime: "6.5 hours",
@@ -205,7 +855,33 @@ export const generateRobotUtilizationData = (
 			chargingTime: "6.5 hours",
 			errorTime: "1.5 hours",
 		},
-		ARTOO2027: {
+		"7days": {
+			robotUtilization: 65,
+			chargeCycles: 364,
+			activeTime: "45.5 hours",
+			idleTime: "7 hours",
+			chargingTime: "45.5 hours",
+			errorTime: "10.5 hours",
+		},
+		"30days": {
+			robotUtilization: 65,
+			chargeCycles: 1560,
+			activeTime: "195 hours",
+			idleTime: "30 hours",
+			chargingTime: "195 hours",
+			errorTime: "45 hours",
+		},
+		custom: {
+			robotUtilization: 65,
+			chargeCycles: 728,
+			activeTime: "91 hours",
+			idleTime: "14 hours",
+			chargingTime: "91 hours",
+			errorTime: "21 hours",
+		},
+	},
+	ARTOO2027: {
+		"24hours": {
 			robotUtilization: 78,
 			chargeCycles: 38,
 			activeTime: "7.8 hours",
@@ -213,20 +889,29 @@ export const generateRobotUtilizationData = (
 			chargingTime: "5.5 hours",
 			errorTime: "45 Minutes",
 		},
-	};
-
-	const periodMultiplier = {
-		"24hours": 1,
-		"7days": 7,
-		"30days": 30,
-		custom: 14,
-	};
-
-	const data = baseData[robot];
-	const multiplier = periodMultiplier[period];
-
-	return {
-		...data,
-		chargeCycles: Math.round(data.chargeCycles * multiplier),
-	};
+		"7days": {
+			robotUtilization: 78,
+			chargeCycles: 266,
+			activeTime: "54.6 hours",
+			idleTime: "175 Minutes",
+			chargingTime: "38.5 hours",
+			errorTime: "315 Minutes",
+		},
+		"30days": {
+			robotUtilization: 78,
+			chargeCycles: 1140,
+			activeTime: "234 hours",
+			idleTime: "750 Minutes",
+			chargingTime: "165 hours",
+			errorTime: "1350 Minutes",
+		},
+		custom: {
+			robotUtilization: 78,
+			chargeCycles: 532,
+			activeTime: "109.2 hours",
+			idleTime: "350 Minutes",
+			chargingTime: "77 hours",
+			errorTime: "630 Minutes",
+		},
+	},
 };

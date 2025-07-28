@@ -1,15 +1,15 @@
 import { useState } from "react";
 import type { DateRange } from "react-day-picker";
 import { Card, CardContent } from "@/components/ui/card";
-import {
-	Select,
-	SelectContent,
-	SelectItem,
-	SelectTrigger,
-	SelectValue,
-} from "@/components/ui/select";
-import { mockTimelineData } from "../../../data/mockData";
-import { DateRangeFilter } from "./DateRangeFilter";
+// import {
+// 	Select,
+// 	SelectContent,
+// 	SelectItem,
+// 	SelectTrigger,
+// 	SelectValue,
+// } from "@/components/ui/select";
+import { mockTimelineDataNew } from "../../../data/mockData";
+// import { DateRangeFilter } from "./DateRangeFilter";
 
 interface TimelineChartProps {
 	robotId?: string;
@@ -36,11 +36,11 @@ export function TimelineChart({ robotId }: TimelineChartProps = {}) {
 
 	// Get data for the selected robot
 	const timelineData =
-		mockTimelineData[mappedRobotId] || mockTimelineData["all-robots"];
+		mockTimelineDataNew[mappedRobotId] || mockTimelineDataNew["all-robots"];
 	return (
 		<Card className="bg-white shadow-sm p-0">
 			<CardContent className="p-6">
-				<div className="mb-6">
+				{/* <div className="mb-6">
 					<div className="flex gap-6">
 						<div>
 							<h2 className="text-lg font-medium mb-1">Time Spend</h2>
@@ -72,7 +72,7 @@ export function TimelineChart({ robotId }: TimelineChartProps = {}) {
 							</div>
 						)}
 					</div>
-				</div>
+				</div> */}
 
 				{/* Timeline Chart */}
 				<div className="relative mt-8">
@@ -125,7 +125,7 @@ export function TimelineChart({ robotId }: TimelineChartProps = {}) {
 						</div>
 
 						{/* Chart bars */}
-						<div className="relative h-48 bg-gray-50 rounded">
+						<div className="relative h-48  rounded">
 							{timelineData.map((bar, index) => (
 								<div
 									key={`${bar.status}-${index}`}
